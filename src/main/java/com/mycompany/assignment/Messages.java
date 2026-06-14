@@ -58,11 +58,31 @@ public class Messages {
     }
     //Display message details
     public void printMessage(){
+        System.out.println("------------------------");
         System.out.println("\nMessage ID:" + MessageID);
         System.out.println("Message Hash:" + MessageHash);
         System.out.println("Recipient:" + Recipient);
         System.out.println("Message:" + Message);
+        System.out.println("------------------------");
     }
+    
+    //Getters
+    public String getMessageID(){
+        return MessageID;
+    }
+    
+    public String getMessageHash(){
+        return MessageHash;
+    }
+    
+    public String getRecipient(){
+        return Recipient;
+    }
+    
+    public String getMessage(){
+        return Message;
+    }
+    
     //Get total messages sent
     public static int returnTotalMessages(){
         return numMessagesSent;

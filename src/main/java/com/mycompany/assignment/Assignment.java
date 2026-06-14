@@ -3,7 +3,7 @@ package com.mycompany.assignment;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */import java.util.Scanner;
-  
+  import java.io.FileWriter;
 
 /**
  *
@@ -90,17 +90,28 @@ public class Assignment {//start of class
          int maxMessages = input.nextInt();
          input.nextLine();
           
+         //arrays
+         Messages[] sentMessages = new Messages[maxMessages];
+         Messages[] storedMessages = new Messages[maxMessages];
+         Messages[] disregardedMessages = new Messages[maxMessages];
+         
+         //Counters
+         int sentCount = 0;
+         int storedCount = 0;
+         int disregardedCount = 0;
+         
          System.out.println(" ");
          
          int choice = 0;
          
          //menu loop
-         while(choice!= 3){
+         while(choice!= 4){
         
         System.out.println("=====Menu=====");
         System.out.println("1.Send Message");
         System.out.println("2.Show recently sent messages");
-        System.out.println("3.Quit");
+        System.out.println("3.Stored Messages");
+        System.out.println("4. Quit");
         
         System.out.println(" ");
         
@@ -109,6 +120,8 @@ public class Assignment {//start of class
         input.nextLine();
         
         System.out.println(" ");
+        
+        Messages msg = null;
         
         switch(choice){
             case 1:
@@ -128,7 +141,7 @@ public class Assignment {//start of class
                 String text = input.nextLine();
                 
                 //creating and calling the Messages method
-                Messages msg = new Messages(Recipient,text);
+                 msg = new Messages(Recipient,text);
                 
                 //Validate recipient
                 if(!msg.checkRecipientCell()){
@@ -149,9 +162,11 @@ public class Assignment {//start of class
                 
                 int option = input.nextInt();
                 input.nextLine();
-                
+                                
                 switch(option){
                     case 1:
+                        sentMessages[sentCount] = msg;
+                        sentCount++;
                         System.out.println("Message successfully sent");
                         msg.printMessage();
                         break;
@@ -160,12 +175,106 @@ public class Assignment {//start of class
                         System.out.println("Press 0 to delete message");
                         int delete = input.nextInt();
                         if(delete == 0){
+                            disregardedMessages[disregardedCount] = msg;
+                            disregardedCount++;
                             System.out.println("Message deleted");
                         }
                        input.nextLine();
                        break;
                        
                     case 3:
+                        System.out.println("\n===Stored Messages Menu===");
+                        System.out.println("1. Display Stored Messages");
+                        System.out.println("2. Display longest Message");
+                        System.out.println("3. Search by Message ID");
+                        System.out.println("4. Search by Recipient");
+                        System.out.println("5. Delete by Message Hash");
+                        System.out.println("6. Full Report");
+                         
+                        int storedChoice = input.nextInt();
+                        input.nextLine();
+                        
+                        switch(storedChoice){
+                            case 1:
+                             for(int i = 0; i< storedCount; i++){
+                                 if(storedMessages[i] !=null){
+                                     storedMessages[i].printMessage();
+                                 }
+                             }  
+                             break;
+                             
+                            case 2:
+                                String longest = storedMessages[0].getMessage();
+                                for (int i = 1; i<storedCount; i++){
+                                    if(storedMessages[i].getMessage().length()> longest.length()){
+                                        longest = storedMessages[i].getMessage();
+                                    }
+                                }
+                                System.out.println("Longest Message");
+                                System.out.println(longest);
+                                
+                                break;
+                                
+                            case 3:
+                                System.out.print("Enter Message ID:");
+                                String searchID = input.nextLine();
+                                for(int i = 0; i<storedCount; i++){
+                                    if(storedMessages[i].getMessageID().equals(searchID)){
+                                        System.out.println(storedMessages[i].getRecipient());
+                                        System.out.println(storedMessages[i].getMessage());
+                                    }
+                                }
+                                break;
+                                
+                            case 4:
+                                System.out.print("Enter Recipient");
+                                String recipientSearch = input.nextLine();
+                                for(int i = 0; i<storedCount; i++){
+                                    if(storedMessages[i].getRecipient().equals(recipientSearch)){
+                                        System.out.println(storedMessages[i].getMessage());
+                                    }
+                                }
+                                break;
+                                
+                            case 5:
+                                System.out.print("Enter Message Hash");
+                                String hash = input.nextLine();
+                                for(int i = 0; i<storedCount; i++){
+                                    if(storedMessages[i].getMessageHash().equals(hash)){
+                                        storedMessages[i] = null;
+                                        System.out.println("message deleted");
+                                    }
+                                }
+                                break; 
+                                
+                            case 6:
+                                for(int i = 0; i<storedCount; i++){
+                                    if(storedMessages[i] != null){
+                                    storedMessages[i].printMessage();
+                                    
+                                }
+                                }
+                                try{FileWriter writer = new FileWriter("storedMessages.json", true);
+                                writer.write("{\n");
+                                writer.write("\"MessageID\":\"" + msg.getMessageID() +"\",\n");
+                                
+                                writer.write("\"MessageHash\":\"" + msg.getMessageHash() + "\",\n");
+                                
+                                writer.write("\"Recipient\":\"" + msg.getRecipient() + "\".\n");
+                                
+                                writer.write("\"Message\":\"" + msg.getMessage() + "\", \n");
+                                writer.write("}\n");
+                                writer.close();
+                                
+                              
+                                        }catch(Exception e){
+                                            System.out.println("Error writing to JSON file");
+                                        }
+                                break;
+                                
+                        }
+                        
+                        
                         System.out.println("Message successfully stored");
                         break;
                     default:

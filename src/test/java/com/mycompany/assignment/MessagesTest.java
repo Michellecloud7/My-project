@@ -102,5 +102,61 @@ public class MessagesTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getMessageID method, of class Messages.
+     */
+    @Test
+    public void testGetMessageID() {
+        System.out.println("getMessageID");
+        Messages instance = null;
+        String expResult = "";
+        String result = instance.getMessageID();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMessageHash method, of class Messages.
+     */
+    @Test
+    public void testGetMessageHash() {
+        System.out.println("getMessageHash");
+        Messages instance = null;
+        String expResult = "";
+        String result = instance.getMessageHash();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRecipient method, of class Messages.
+     */
+    @Test
+    public void testGetRecipient() {
+        System.out.println("getRecipient");
+        Messages instance = null;
+        String expResult = "";
+        String result = instance.getRecipient();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMessage method, of class Messages.
+     */
+    @Test
+    public void testGetMessage() {
+        System.out.println("getMessage");
+        Messages instance = null;
+        String expResult = "";
+        String result = instance.getMessage();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }
